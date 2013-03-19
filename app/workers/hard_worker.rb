@@ -10,6 +10,7 @@ class HardWorker
     end
   ensure
     DBLog.create!(value: "Exiting")
+    Rails.logger.warn "Exiting"
     Sidekiq.logger.warn "Exiting"
   end
 end
