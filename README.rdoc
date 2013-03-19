@@ -1,28 +1,8 @@
-== README
+== Sidekiq ActiveRecord Bug
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+1. Run `tail -f log/development.log`
+2. Run `bundle exec sidekiq` in another Terminal tab
+3. Run `bundle exec rails runner "HardWorker.perform_async('bob', 5)"`
+4. Wait for `begin transaction` in log/development.log
+5. Ctrl-C the sidekiq worker
+6. Watch how the transaction gets nevertheless commited and not rolled back.
